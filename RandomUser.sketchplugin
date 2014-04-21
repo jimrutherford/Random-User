@@ -1,0 +1,156 @@
+
+var randomUserLayers = [];
+var profileLayers = [];
+findRandomUserLayers([[doc currentPage] layers]);
+
+log ("Total Layers " + randomUserLayers.length);
+
+for (var i = 0; i < randomUserLayers.length; i++)
+{
+
+  var randomUserLayer = randomUserLayers[i];
+  findProfileLayers(randomUserLayer);
+
+//log ([profileLayers count]);
+log ("==============");
+
+
+  for (var j = 0; j < profileLayers.length; j++)
+  {
+    var user = getRandomUser();
+    var profileLayer = profileLayers[j];
+    insertRandomUser(profileLayer, user);
+  }
+
+  profileLayers = [];
+}
+
+
+
+
+function findRandomUserLayers(layers)
+{
+
+
+  //log ([layers count]);
+
+  for (var i = 0; i < [layers count]; i++)
+  {
+    var layer = layers[i];
+
+    //log (layer.class());
+
+    if (layer.class() === MSArtboardGroup || layer.class() === MSLayerGroup)
+    {
+      //log ([layer name]);
+      //log([[layer layers] count]);
+
+      if (layer.class() === MSLayerGroup && layer.name() == "randomUser")
+      {
+        randomUserLayers.push(layer);
+      }
+
+      findRandomUserLayers([layer layers]);
+    }
+  }
+}
+
+
+function findProfileLayers(randomUserLayer)
+{
+  var layers = [randomUserLayer layers];
+
+  for (var i = 0; i < [layers count]; i++)
+  {
+    var layer = layers[i];
+
+    //log (layer.class());
+
+    if (layer.name().indexOf("profile:") == 0)
+    {
+      profileLayers.push(layer);
+    }
+
+    if (layer.class() === MSLayerGroup)
+    {
+      findProfileLayers(layer);
+    }
+
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+function getRandomUser()
+{
+  var theUrl = [NSURL URLWithString:"http://api.randomuser.me/"];
+
+  // define the request
+  var theRequest = NSMutableURLRequest.requestWithURL_cachePolicy_timeoutInterval(theUrl, NSURLRequestReloadIgnoringLocalCacheData, 60);
+  theRequest.setHTTPMethod_("GET");
+
+  // get response data
+  var theResponse = null, theResponseData = [NSURLConnection sendSynchronousRequest:theRequest returningResponse:nil error:nil];
+
+  if (theResponseData!=nil) {
+
+    // convert data to text
+    theText = [[NSString alloc] initWithData:theResponseData encoding:NSUTF8StringEncoding];
+
+    var parsed = JSON.parse(theText);
+    user = parsed.results[0].user;
+  }
+
+  return user;
+}
+
+
+
+
+function insertRandomUser(profileLayer, user)
+{
+  log ([profileLayer name]);
+  //If the layer is linked and is definitely a image layer
+
+
+
+    if ([profileLayer name] == "profile:firstname")
+    {
+      [profileLayer setStringValue:user.name.first];
+      log (user.name.first);
+
+    }
+
+    if ([profileLayer name] == "profile:lastname")
+    {
+      [profileLayer setStringValue:user.name.last];
+
+    }
+
+    if ([profileLayer name] == "profile:city")
+    {
+      [profileLayer setStringValue:user.location.city];
+
+    }
+
+
+
+
+  if ([profileLayer name] == "profile:picture")
+  {
+    log ("+++ " + profileLayer.class());
+    log (user.picture);
+    var pictureUrl = [NSURL URLWithString:user.picture];
+    //var image = [[NSImage alloc] initWithContentsOfURL:pictureUrl];
+    //[profileLayer setImage:image];
+  }
+
+}
