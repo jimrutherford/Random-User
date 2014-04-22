@@ -81,14 +81,6 @@ function findProfileLayers(randomUserLayer)
 
 
 
-
-
-
-
-
-
-
-
 function getRandomUser()
 {
   var theUrl = [NSURL URLWithString:"http://api.randomuser.me/"];
@@ -118,39 +110,31 @@ function getRandomUser()
 function insertRandomUser(profileLayer, user)
 {
   log ([profileLayer name]);
-  //If the layer is linked and is definitely a image layer
+
+  text = [profileLayer name];
+
+  // strip the prefix
+  text = text.replace("profile:", "");
 
 
+  text = text.replace("firstname", toTitleCase(user.name.first));
+  text = text.replace("lastname", toTitleCase(user.name.last));
 
-    if ([profileLayer name] == "profile:firstname")
-    {
-      [profileLayer setStringValue:user.name.first];
-      log (user.name.first);
+  text = text.replace("street", toTitleCase(user.location.street));
+  text = text.replace("city", toTitleCase(user.location.city));
+  text = text.replace("state", toTitleCase(user.location.state));
+  text = text.replace("zip", toTitleCase(user.location.zip));
 
-    }
-
-    if ([profileLayer name] == "profile:lastname")
-    {
-      [profileLayer setStringValue:user.name.last];
-
-    }
-
-    if ([profileLayer name] == "profile:city")
-    {
-      [profileLayer setStringValue:user.location.city];
-
-    }
+  text = text.replace("email", user.email);
+  text = text.replace("phone", user.phone);
+  text = text.replace("cell", user.cell);
 
 
+  [profileLayer setStringValue:text];
 
+}
 
-  if ([profileLayer name] == "profile:picture")
-  {
-    log ("+++ " + profileLayer.class());
-    log (user.picture);
-    var pictureUrl = [NSURL URLWithString:user.picture];
-    //var image = [[NSImage alloc] initWithContentsOfURL:pictureUrl];
-    //[profileLayer setImage:image];
-  }
-
+function toTitleCase(str)
+{
+    return str.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
 }

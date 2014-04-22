@@ -29,7 +29,7 @@ rect.style().fills().addNewStylePart();
 var docFolder = [[doc fileURL] path];
 
 log (docFolder);
-/*
+
 var imageLayer = ag.addLayerOfType("image");
 
 
@@ -37,36 +37,23 @@ imageLayer.setName("Test Image");
 
 log (imageLayer.class());
 
-var tmpDir = NSTemporaryDirectory() + "taptonics/";
-[[NSFileManager defaultManager] createDirectoryAtPath:tmpDir attributes:nil];
-log (tmpDir);
-
 var s = "http://api.randomuser.me/0.3.2/portraits/women/20.jpg";
 var imgURL = [NSURL URLWithString:s];
 
-
-var imgURL = [NSURL URLWithString:s];
-var fileName = [[imgURL path] lastPathComponent];
-
 var imageData = [NSData dataWithContentsOfURL: imgURL];
-
-var localFile = tmpDir + fileName;
-
-if (imageData) {
-    // writeToFile is defined in JSTExtras
-    log ("here");
-    [imageData writeToFile: localFile];
-}
 
 var image = [[NSImage alloc] initWithData:imageData];
 
-//var image = [[NSImage alloc] initWithContentsOfFile:localFile];
+if (image)
+{
+  log ("Got Data");
 
+  var layerFrame = [imageLayer frame];
 
+  [layerFrame setConstrainProportions: false];
+  [layerFrame setHeight: 200];
+  [layerFrame setWidth: 200];
+  [layerFrame setConstrainProportions: true];
 
-//imageLayer.setImage(image);
-
-[imageLayer frame].width = 200;
-[imageLayer frame].height = 200;
-
-*/
+  imageLayer.image = image;
+}
