@@ -40,6 +40,7 @@ function insertRandomUser(profileLayer, user)
   text = text.replace("email", user.email);
   text = text.replace("phone", user.phone);
   text = text.replace("cell", user.cell);
+  text = text.replace("username", user.username);
 
   [profileLayer setStringValue:text];
 }
