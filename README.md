@@ -43,8 +43,6 @@ The insertion of data into the Sketch Text layers are determined by the name of 
 
 In future releases I will be adding support for:
 
+* Profile picture
 * Date of birth
 * Date registered
-
-The SketchApp 3 Plugin API does not seem to support bitmap layers anymore.  I'm trying to figure out how to pull the image from the randomuser.me service, but the Sketch API does not seem to be supporting this.  If you know how to do this, please submit a pull request!
-
