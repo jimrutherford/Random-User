@@ -1,3 +1,4 @@
+#import 'randomUserCommon.js'
 
 // find the current artboard
 var layer = selection[0];
@@ -7,9 +8,6 @@ if (layer)
   var currentArtboard;
 
   do {
-
-    log (layer.class());
-
     if (layer.class() === MSArtboardGroup)
     {
       currentArtboard = layer;
@@ -21,29 +19,36 @@ if (layer)
   } while (layer);
 
   } else {
-
     currentArtboard = [[doc currentPage] artboards][0];
-
 }
 
-log (currentArtboard.name());
+// create our layer group that we'll be inserting the text fields into
 
-// let's add 4 text objects
-// with specific names
+var randomUserGroup = currentArtboard.addLayerOfType("group");
+randomUserGroup.setName("randomUser");
+
+[randomUserGroup frame].width = 400;
+[randomUserGroup frame].height = 160;
+
+[randomUserGroup frame].x = 20;
+[randomUserGroup frame].y = 200;
+
+// get our random user
+var user = getRandomUser();
 
 var whiteColor = [[MSColor alloc] init];
-
 [whiteColor setRed:1];
 [whiteColor setGreen:1];
 [whiteColor setBlue:1];
 [whiteColor setAlpha:1];
 
+// let's add 4 text objects
+// with specific names
 var fields = ["firstname", "lastname", "city, state", "email"];
 
 for (i = 0; i < fields.length; i++)
 {
-
-  var textLayer = currentArtboard.addLayerOfType("text");
+  var textLayer = randomUserGroup.addLayerOfType("text");
 
   textLayer.textColor = whiteColor;
   textLayer.fontSize = 28;
@@ -55,9 +60,10 @@ for (i = 0; i < fields.length; i++)
   [textLayer frame].width = 400;
   [textLayer frame].height = 30;
 
-  [textLayer frame].x = 20;
-  [textLayer frame].y = 100 + (height * i);
+  [textLayer frame].x = 0;
+  [textLayer frame].y = height * i;
 
   [textLayer setStringValue:fields[i]];
 
+  insertRandomUser(textLayer, user);
 }
