@@ -18,7 +18,7 @@ Usage
 
 Select any Artboard in your project, open the **Plugins** menu and choose **Random User > Insert Random User**.  You can refresh the user with new data by opening the **Plugins** menu and choose **Random User > Refresh Random Users**.
 
-Watch this short screencast for full description of how the plugin can be customized.
+Watch this [short screencast](http://youtu.be/j456z5gFgjg) for full description of how the plugin can be customized.
 
 Text Configuration
 =============================
