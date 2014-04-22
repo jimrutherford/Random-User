@@ -51,7 +51,7 @@ for (i = 0; i < fields.length; i++)
   var textLayer = randomUserGroup.addLayerOfType("text");
 
   textLayer.textColor = whiteColor;
-  textLayer.fontSize = 28;
+  textLayer.fontSize = 24;
 
   textLayer.setName("profile:" + fields[i]);
 
