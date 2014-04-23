@@ -22,6 +22,11 @@ if (layer)
     currentArtboard = [[doc currentPage] artboards][0];
 }
 
+if (!currentArtboard)
+{
+  currentArtboard = [doc currentPage];
+}
+
 // create our layer group that we'll be inserting the text fields into
 
 var randomUserGroup = currentArtboard.addLayerOfType("group");
@@ -37,9 +42,9 @@ randomUserGroup.setName("randomUser");
 var user = getRandomUser();
 
 var whiteColor = [[MSColor alloc] init];
-[whiteColor setRed:1];
-[whiteColor setGreen:1];
-[whiteColor setBlue:1];
+[whiteColor setRed:0.8];
+[whiteColor setGreen:0.8];
+[whiteColor setBlue:0.8];
 [whiteColor setAlpha:1];
 
 // let's add 4 text objects
