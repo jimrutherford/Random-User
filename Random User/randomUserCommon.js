@@ -1,6 +1,6 @@
 function getRandomUser()
 {
-  var theUrl = [NSURL URLWithString:"http://api.randomuser.me/"];
+  var theUrl = [NSURL URLWithString:"http://api.randomuser.me/?sketch=true"];
 
   // define the request
   var theRequest = NSMutableURLRequest.requestWithURL_cachePolicy_timeoutInterval(theUrl, NSURLRequestReloadIgnoringLocalCacheData, 60);
