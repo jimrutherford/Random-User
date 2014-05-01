@@ -27,13 +27,20 @@ if (!currentArtboard)
   currentArtboard = [doc currentPage];
 }
 
+// plugin defaults
+var fields = ["firstname", "lastname", "city, state", "email"];
+
+var profilePictureHeight = 200;
+var height = 40;
+
+
 // create our layer group that we'll be inserting the text fields into
 
 var randomUserGroup = currentArtboard.addLayerOfType("group");
 randomUserGroup.setName("randomUser");
 
 [randomUserGroup frame].width = 400;
-[randomUserGroup frame].height = 160;
+[randomUserGroup frame].height = profilePictureHeight + (fields.length * height);
 
 [randomUserGroup frame].x = 20;
 [randomUserGroup frame].y = 200;
@@ -47,10 +54,6 @@ var whiteColor = [[MSColor alloc] init];
 [whiteColor setBlue:0.8];
 [whiteColor setAlpha:1];
 
-// let's add 4 text objects
-// with specific names
-var fields = ["firstname", "lastname", "city, state", "email"];
-
 for (i = 0; i < fields.length; i++)
 {
   var textLayer = randomUserGroup.addLayerOfType("text");
@@ -60,15 +63,17 @@ for (i = 0; i < fields.length; i++)
 
   textLayer.setName("profile:" + fields[i]);
 
-  var height = 40;
+  var textLayerFrame = [textLayer frame];
+  [textLayerFrame setWidth: 400];
+  [textLayerFrame setHeight: 30];
 
-  [textLayer frame].width = 400;
-  [textLayer frame].height = 30;
-
-  [textLayer frame].x = 0;
-  [textLayer frame].y = height * i;
+  [textLayerFrame setX: 0];
+  [textLayerFrame setY: profilePictureHeight + (height * i)];
 
   [textLayer setStringValue:fields[i]];
 
   insertRandomUser(textLayer, user);
 }
+
+// insert our picture layer
+insertProfilePicture(randomUserGroup, user);

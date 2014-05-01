@@ -24,25 +24,79 @@ function getRandomUser()
 
 function insertRandomUser(profileLayer, user)
 {
-  text = [profileLayer name];
+  if (profileLayer.class() === MSTextLayer)
+  {
 
-  // strip the prefix
-  text = text.replace("profile:", "");
+    text = [profileLayer name];
 
-  text = text.replace("firstname", toTitleCase(user.name.first));
-  text = text.replace("lastname", toTitleCase(user.name.last));
+    // strip the prefix
+    text = text.replace("profile:", "");
 
-  text = text.replace("street", toTitleCase(user.location.street));
-  text = text.replace("city", toTitleCase(user.location.city));
-  text = text.replace("state", toTitleCase(user.location.state));
-  text = text.replace("zip", toTitleCase(user.location.zip));
+    text = text.replace("firstname", toTitleCase(user.name.first));
+    text = text.replace("lastname", toTitleCase(user.name.last));
 
-  text = text.replace("email", user.email);
-  text = text.replace("phone", user.phone);
-  text = text.replace("cell", user.cell);
-  text = text.replace("username", user.username);
+    text = text.replace("street", toTitleCase(user.location.street));
+    text = text.replace("city", toTitleCase(user.location.city));
+    text = text.replace("state", toTitleCase(user.location.state));
+    text = text.replace("zip", toTitleCase(user.location.zip));
 
-  [profileLayer setStringValue:text];
+    text = text.replace("email", user.email);
+    text = text.replace("phone", user.phone);
+    text = text.replace("cell", user.cell);
+    text = text.replace("username", user.username);
+
+    [profileLayer setStringValue:text];
+  }
+  else if (profileLayer.class() === MSBitmapLayer)
+  {
+    insertProfilePicture(profileLayer, user);
+  }
+}
+
+function insertProfilePicture(profileLayer, user)
+{
+  var urlString = user.picture;
+  var imageURL = [NSURL URLWithString:urlString];
+
+  var imageFromURL = [[NSImage alloc] initWithContentsOfURL:imageURL];
+
+  var imageLayer;
+  var imageCollection;
+
+
+
+  if (profileLayer.class() === MSBitmapLayer)
+  {
+    // updating an existing layer
+    [profileLayer setIsVisible:NO];
+    imageCollection = [[profileLayer documentData] images];
+    var image = [imageCollection addImage:imageFromURL name:"profilePicture" convertColourspace:NO];
+    [profileLayer setPrimitiveImage:image];
+    [profileLayer setIsVisible:YES];
+  } else {
+    // creating a new profile picture
+    imageCollection = [[MSImageCollection alloc] init];
+    var image = [imageCollection addImage:imageFromURL name:"profilePicture" convertColourspace:NO];
+    imageLayer = [[MSBitmapLayer alloc] initWithImage:image parentFrame:[profileLayer frame] name:"profile:picture"];
+
+    if (imageLayer)
+    {
+      //log ("Got Image Data");
+
+      [profileLayer addLayer:imageLayer];
+
+      var layerFrame = [imageLayer frame];
+
+      [layerFrame setX:0];
+      [layerFrame setY:0];
+
+      [layerFrame setConstrainProportions: false];
+      [layerFrame setHeight: 200];
+      [layerFrame setWidth: 200];
+      [layerFrame setConstrainProportions: true];
+
+    }
+  }
 }
 
 function toTitleCase(str)
