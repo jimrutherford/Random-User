@@ -63,20 +63,18 @@ function insertProfilePicture(profileLayer, user)
   var imageLayer;
   var imageCollection;
 
-
-
   if (profileLayer.class() === MSBitmapLayer)
   {
     // updating an existing layer
-    [profileLayer setIsVisible:NO];
+    [profileLayer setIsVisible:false];
     imageCollection = [[profileLayer documentData] images];
-    var image = [imageCollection addImage:imageFromURL name:"profilePicture" convertColourspace:NO];
+    var image = [imageCollection addImage:imageFromURL name:"profilePicture" convertColourspace:false];
     [profileLayer setPrimitiveImage:image];
-    [profileLayer setIsVisible:YES];
+    [profileLayer setIsVisible:true];
   } else {
     // creating a new profile picture
     imageCollection = [[MSImageCollection alloc] init];
-    var image = [imageCollection addImage:imageFromURL name:"profilePicture" convertColourspace:NO];
+    var image = [imageCollection addImage:imageFromURL name:"profilePicture" convertColourspace:false];
     imageLayer = [[MSBitmapLayer alloc] initWithImage:image parentFrame:[profileLayer frame] name:"profile:picture"];
 
     if (imageLayer)

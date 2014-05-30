@@ -1,7 +1,12 @@
 #import 'randomUserCommon.js'
 
 // find the current artboard
-var layer = selection[0];
+var layer;
+
+if ([selection count] != 0)
+{
+  layer = [selection objectAtIndex:0];
+}
 
 if (layer)
 {
@@ -19,7 +24,11 @@ if (layer)
   } while (layer);
 
   } else {
-    currentArtboard = [[doc currentPage] artboards][0];
+
+    if ([[[doc currentPage] artboards] count] > 0)
+    {
+      currentArtboard = [[[doc currentPage] artboards] objectAtIndex:0];
+    }
 }
 
 if (!currentArtboard)

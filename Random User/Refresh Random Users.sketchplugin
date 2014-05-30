@@ -5,8 +5,11 @@ var profileLayers = [];
 
 findRandomUserLayers([[doc currentPage] layers]);
 
+log (randomUserLayers.length);
+
 for (var i = 0; i < randomUserLayers.length; i++)
 {
+
   var randomUserLayer = randomUserLayers[i];
   findProfileLayers(randomUserLayer);
 
@@ -22,13 +25,14 @@ for (var i = 0; i < randomUserLayers.length; i++)
 
 function findRandomUserLayers(layers)
 {
+
   for (var i = 0; i < [layers count]; i++)
   {
-    var layer = layers[i];
+    var layer = [layers objectAtIndex:i];
 
-    if (layer.class() === MSArtboardGroup || layer.class() === MSLayerGroup)
+    if ([layer isMemberOfClass:[MSArtboardGroup class]] || [layer isMemberOfClass:[MSLayerGroup class]] )
     {
-      if (layer.class() === MSLayerGroup && layer.name().indexOf("randomUser") == 0)
+      if ([layer isMemberOfClass:[MSLayerGroup class]] && layer.name().indexOf("randomUser") == 0)
       {
         randomUserLayers.push(layer);
       }
@@ -44,7 +48,7 @@ function findProfileLayers(randomUserLayer)
 
   for (var i = 0; i < [layers count]; i++)
   {
-    var layer = layers[i];
+    var layer = [layers objectAtIndex:i];
 
     if (layer.name().indexOf("profile:") == 0)
     {
