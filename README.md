@@ -26,6 +26,7 @@ The insertion of data into the Sketch Text layers are determined by the name of 
 
 * firstname
 * lastname
+* picture
 * street
 * city
 * state
@@ -43,6 +44,5 @@ The insertion of data into the Sketch Text layers are determined by the name of 
 
 In future releases I will be adding support for:
 
-* Profile picture
 * Date of birth
 * Date registered
