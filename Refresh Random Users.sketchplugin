@@ -1,5 +1,7 @@
 #import 'randomUserCommon.js'
 
+log ([doc fileUrl]);
+
 var randomUserLayers = [];
 var profileLayers = [];
 
